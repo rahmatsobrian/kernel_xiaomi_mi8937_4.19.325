@@ -13,8 +13,8 @@ if [ -z "$VARIANT" ]; then
 fi
 
 # ================= PATH =================
-DEFCONFIG="tissot_defconfig"
-TEMP_DEFCONFIG="tissot_temp_defconfig"
+DEFCONFIG="rahmatmi8937_defconfig"
+TEMP_DEFCONFIG="rahmatmi8937_temp_defconfig"
 ROOTDIR=$(pwd)
 OUTDIR="$ROOTDIR/out/arch/arm64/boot"
 ANYKERNEL_DIR="$ROOTDIR/AnyKernel"
@@ -25,8 +25,8 @@ KIMG="$OUTDIR/Image.gz"
 export PATH="$ROOTDIR/clang-zyc/bin:$PATH"
 
 # ================= INFO =================
-KERNEL_NAME="Yoru-NonTreble"
-DEVICE="tissot"
+KERNEL_NAME="Yoru"
+DEVICE="mi8937"
 
 # =============== DATE (WIB) ===============
 DATE_TITLE=$(TZ=Asia/Jakarta date +"%d%m%Y")
@@ -120,15 +120,18 @@ build_kernel() {
     BUILD_START=$(TZ=Asia/Jakarta date +%s)
 
     echo -e "$yellow[+] Building Kernel [${VARIANT}]...$white"
-    make -j$(nproc --all) \
-        ARCH=arm64 \
-        O=out \
-        CC=clang \
-        CROSS_COMPILE=aarch64-linux-gnu- \
-        CROSS_COMPILE_ARM32=arm-linux-gnueabi- || {
-            send_telegram_error
-            exit 1
-        }
+make -j$(nproc --all) \
+  O=out \
+  ARCH=arm64 \
+  CC=clang \
+  LD=ld.lld \
+  LLVM=1 \
+  LLVM_IAS=1 \
+  CROSS_COMPILE=aarch64-linux-gnu- \
+  CROSS_COMPILE_ARM32=arm-linux-gnueabi- || {
+        send_telegram_error
+        exit 1
+    }
 
     BUILD_END=$(TZ=Asia/Jakarta date +%s)
     DIFF=$((BUILD_END - BUILD_START))
