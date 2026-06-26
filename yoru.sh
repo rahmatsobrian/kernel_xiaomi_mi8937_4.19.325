@@ -13,8 +13,8 @@ if [ -z "$VARIANT" ]; then
 fi
 
 # ================= PATH =================
-DEFCONFIG="rahmatmi8937_defconfig"
-TEMP_DEFCONFIG="rahmatmi8937_temp_defconfig"
+DEFCONFIG="vendor/rahmatmi8937_defconfig"
+TEMP_DEFCONFIG="vendor/rahmatmi8937_temp_defconfig"
 ROOTDIR=$(pwd)
 OUTDIR="$ROOTDIR/out/arch/arm64/boot"
 ANYKERNEL_DIR="$ROOTDIR/AnyKernel"
